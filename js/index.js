@@ -18,7 +18,18 @@ fetch("http://localhost:3000/api/categories")
       const $colonneDescription = document.createElement("td");
       $colonneDescription.innerText = categorie.description;
 
-      $ligne.append($colonneId, $colonneDesignation, $colonneDescription);
+      const $colonneActions = document.createElement("td");
+      const $lienDetails = document.createElement("a");
+      $lienDetails.href = `/pages/details-categorie.html?id=${categorie.id}`;
+      $lienDetails.innerText = "Voir";
+      $colonneActions.appendChild($lienDetails);
+
+      $ligne.append(
+        $colonneId,
+        $colonneDesignation,
+        $colonneDescription,
+        $colonneActions
+      );
       $categories.appendChild($ligne);
     });
   });
