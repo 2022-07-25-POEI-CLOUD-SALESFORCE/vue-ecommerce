@@ -1,10 +1,14 @@
-const id = prompt("Entrez un id : ");
+// const id = prompt("Entrez un id : ");
 
 // A partir de l'ID aller récupérer la catégorie appropriée
 // Si la catégorie n'existe, afficher dans la page "La catégorie recherchée n'existe pas"
 // Le mnessage doit avoir la couleur rouge
 // Si elle, l'afficher dans le HTML.
 //Vous avez la liberté d'organiser la page comme bon vous semble
+
+const urlParams = new URLSearchParams(location.search);
+const id = urlParams.get("id");
+
 const $title = document.querySelector("#title");
 const $description = document.querySelector("#description");
 
