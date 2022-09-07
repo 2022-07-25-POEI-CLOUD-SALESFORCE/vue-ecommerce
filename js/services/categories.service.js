@@ -15,5 +15,13 @@ export class CategorieService {
       });
   }
 
-  fetchCategorieById(id) {}
+  fetchCategorieById(id) {
+    return fetch(`${this.url}/${id}`)
+      .then((response) => {
+        return response.json();
+      })
+      .then((data) => {
+        return data;
+      });
+  }
 }

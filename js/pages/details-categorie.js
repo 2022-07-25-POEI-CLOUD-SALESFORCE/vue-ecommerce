@@ -1,31 +1,26 @@
 import { BASE_URL } from "../constantes.js";
+import { CategorieService } from "../services/categories.service.js";
+import { getParam } from "../utils/get-param.js";
 
-const urlParams = new URLSearchParams(location.search);
-const id = urlParams.get("id");
+class DetailsCategorie {
+  constructor() {
+    this.categorie = null;
+    this.categoriesService = new CategorieService();
+    this.$title = document.querySelector("#title");
+    this.$description = document.querySelector("#description");
+    this.id = getParam("id");
+  }
 
-const $title = document.querySelector("#title");
-const $description = document.querySelector("#description");
-
-fetch(`${BASE_URL}/categories/${id}`)
-  .then((response) => {
-    console.log(response);
-    if (!response.ok) {
-      const errorResponse = {
-        status: response.status,
-        statusText: response.statusText,
-      };
-      throw errorResponse;
+  async render() {
+    try {
+      this.categorie = await this.categoriesService.fetchCategorieById(this.id);
+      this.$title.innerText = `${this.categorie.nom}`;
+      this.$description.innerText = `${this.categorie.description}`;
+    } catch (error) {
+      this.$title.innerText = "La catégorie recherchée n'existe pas";
     }
-    return response.json();
-  })
-  .then((data) => {
-    $title.innerText = `${data.nom}`;
-    $description.innerText = `${data.description}`;
-  })
-  .catch((error) => {
-    console.log(error);
-    if (error.status === 404) {
-      $title.innerText = "La catégorie recherchée n'existe pas";
-      $title.classList.add("error");
-    }
-  });
+  }
+}
+
+const detailsCategoriePage = new DetailsCategorie();
+detailsCategoriePage.render();
